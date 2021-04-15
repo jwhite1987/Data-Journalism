@@ -63,19 +63,19 @@ d3.csv("assets/data/data.csv").then(data => {
       .attr("r", 8)
       .style("fill", "#69b3a2")
 
-      x.domain([1000, 0])
-    svg.select(".myXaxis")
-      .transition()
-      .duration(2000)
-      .attr("opacity", "1")
-      .call(d3.axisBottom(x));
-
-    svg.selectAll("circle")
-      .transition()
-      .delay(function(d,i){return(i*3)})
-      .duration(2000)
-      .attr("cx", function (d) { return x(d.poverty); } )
-      .attr("cy", function (d) { return y(d.healthcare); } )
+    //   x.domain([1000, 0])
+    // svg.select(".myXaxis")
+    //   .transition()
+    //   .duration(2000)
+    //   .attr("opacity", "1")
+    //   .call(d3.axisBottom(x));
+    //
+    // svg.selectAll("circle")
+    //   .transition()
+    //   .delay(function(d,i){return(i*3)})
+    //   .duration(2000)
+    //   .attr("cx", function (d) { return x(d.poverty); } )
+    //   .attr("cy", function (d) { return y(d.healthcare); } )
 })
 
 
