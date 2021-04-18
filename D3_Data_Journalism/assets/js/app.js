@@ -19,7 +19,7 @@ var svg = d3.select("#scatter")
   .attr("height", svgHeight);
 
 
-const chartGroup = svg.append("g")
+var chartGroup = svg.append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 d3.csv("assets/data/data.csv").then(data => {
@@ -48,37 +48,36 @@ d3.csv("assets/data/data.csv").then(data => {
   });
 
   var x = d3.scaleLinear()
-    .domain([0, d3.max(data, d => d.poverty)])
+    .domain([20, d3.max(data, d => d.obesity)])
     .range([0, width]);
   chartGroup.append("g")
     .attr("transform", `translate(0, ${height})`)
     .call(d3.axisBottom(x));
   var y = d3.scaleLinear()
-    .domain([0, d3.max(data, d => d.obesity)])
+    .domain([0, d3.max(data, d => d.poverty)])
     .range([height, 0]);
   chartGroup.append("g")
     .call(d3.axisLeft(y));
 
-  var circleGroup = chartGroup
+  var circlesGroup = chartGroup
     .selectAll("circle")
-    // .selectAll("dot")
     .data(data)
     .enter()
     .append("circle")
-      .attr("cx", d => x(d.poverty))
-      .attr("cy", d => y(d.obesity))
-      .attr("r", "15")
-      .style("fill", "#69b3a2")
-      .attr("opacity", ".5");
+    .attr("cx", (d, i) => x(d.obesity))
+    .attr("cy", (d, i) => y(d.poverty))
+    .attr("r", "15")
+    .style("fill", "#69b3a2")
+    .attr("opacity", ".5");
 
   chartGroup.selectAll("text")
     .data(data)
     .enter()
     .append("text")
-    .text(function(d){
-      return d.abbr; })
-    .attr("x", d => x(d.poverty) - 8)
-    .attr("y", d => y(d.obesity) + 4)
+    .text(d => {
+      return (d.abbr) })
+    .attr("x", d => x(d.obesity) - 8)
+    .attr("y", d => y(d.poverty) + 4)
     .attr("font_family", "sans-serif")  // Font type
     .attr("font-size", "11px")  // Font size
     .attr("fill", "black");   // Font color
@@ -87,13 +86,13 @@ d3.csv("assets/data/data.csv").then(data => {
   var toolTip = d3.tip()
     .attr("class", "tooltip")
     .offset([80, -60])
-    .html(d => (`State: ${d.state}`));
+    .html(function(d) { return (`State: ${d.state}`)});
 
   chartGroup.call(toolTip);
 
-  circleGroup
-    .on("click", data => toolTip.show(data, this))
-    .on("mouseout", (d, i) => toolTip.hide(d));
+  circlesGroup
+    .on("mouseover", function(data) { toolTip.show(data, this) })
+    .on("mouseout", (d, i) => { toolTip.hide(d) });
 
   chartGroup.append("text")
     .attr("transform", "rotate(-90)")
@@ -108,28 +107,28 @@ d3.csv("assets/data/data.csv").then(data => {
     .attr("class", "axisText")
     .text("Obesity");
 
-    grid = g => g
-        .attr("stroke", "currentColor")
-        .attr("stroke-opacity", 0.1)
-        .call(g => g.append("g")
-          .selectAll("line")
-          .data(x.ticks())
-          .join("line")
-            .attr("x1", d => 0.5 + x(d))
-            .attr("x2", d => 0.5 + x(d))
-            .attr("y1", margin.top)
-            .attr("y2", height - margin.bottom))
-        .call(g => g.append("g")
-          .selectAll("line")
-          .data(y.ticks())
-          .join("line")
-            .attr("y1", d => 0.5 + y(d))
-            .attr("y2", d => 0.5 + y(d))
-            .attr("x1", margin.left)
-            .attr("x2", width - margin.right));
-
-            svg.append("g")
-              .call("grid");
+    // const grid = g => g
+    //     .attr("stroke", "currentColor")
+    //     .attr("stroke-opacity", 0.1)
+    //     .call(g => g.append("g")
+    //       .selectAll("line")
+    //       .data(x.ticks())
+    //       .join("line")
+    //         .attr("x1", d => 0.5 + x(d))
+    //         .attr("x2", d => 0.5 + x(d))
+    //         .attr("y1", margin.top)
+    //         .attr("y2", height - margin.bottom))
+    //     .call(g => g.append("g")
+    //       .selectAll("line")
+    //       .data(y.ticks())
+    //       .join("line")
+    //         .attr("y1", d => 0.5 + y(d))
+    //         .attr("y2", d => 0.5 + y(d))
+    //         .attr("x1", margin.left)
+    //         .attr("x2", width - margin.right));
+    //
+    //         svg.append("g")
+    //           .call("grid");
 }).catch(function(error) {
     console.log(error);
 
