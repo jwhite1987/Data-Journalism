@@ -81,9 +81,9 @@ function renderCircles(circlesGroup, newX, chosenXAxis, x, y) {
   return circlesGroup;
 }
 function updateStates(data, chartGroup, newX, chosenXAxis, x, y, stateLabels) {
-  stateLabels
+  stateLabels = chartGroup
     .data(data)
-    .attr("x", d => newX(d[chosenXAxis]));
+    .attr("x", d => x(d[chosenXAxis]));
   return chartGroup;
 }
 
