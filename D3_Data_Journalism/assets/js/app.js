@@ -18,7 +18,6 @@ var svg = d3.select("#scatter")
   .attr("width", svgWidth)
   .attr("height", svgHeight);
 
-
 var chartGroup = svg.append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
@@ -58,6 +57,8 @@ d3.csv("assets/data/data.csv").then(data => {
   chartGroup.append("g")
     .call(d3.axisLeft(y));
 
+  // var color = d3.scale.category20();
+
   var circlesGroup = chartGroup
     .selectAll("circle")
     .data(data)
@@ -66,7 +67,7 @@ d3.csv("assets/data/data.csv").then(data => {
     .attr("cx", (d) => x(d.obesity))
     .attr("cy", (d) => y(d.poverty))
     .attr("r", "15")
-    .style("fill", "#69b3a2")
+    .style("fill", "blue")
     .attr("opacity", ".5");
 
   chartGroup.selectAll("label")
@@ -98,8 +99,13 @@ d3.csv("assets/data/data.csv").then(data => {
     var toolTip = d3.tip()
       .attr("class", "tooltip")
       .offset([0, 0])
-      // d3.select(this)
-      .html(function(d) { return d.state });
+      .style("border", "solid")
+      .style("background-color", "white")
+      .style("border-width", "1px")
+      .style("border-radius", "5px")
+      .style("padding", "10px")
+      .html(function(d)
+      { return `<h5>${d.state}</h5>Poverty: ${d.poverty}<br>Obesity: ${d.obesity}`});
 
 
 
