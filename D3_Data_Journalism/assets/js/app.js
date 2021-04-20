@@ -22,80 +22,6 @@ var svg = d3.select("#scatter")
 var chartGroup = svg.append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-var chosenXAxis = "Obesity";
-
-function xScale(data, chosenXAxis) {
-  // create scales
-  var x = d3.scaleLinear()
-    .domain([d3.min(data, d => d[chosenXAxis]) * 0.8,
-    d3.max(data, d => d[chosenXAxis]) * 1.2
-    ])
-    .range([0, width]);
-  return x;
-}
-
-function updateToolTip(chosenXAxis, circlesGroup) {
-
-  var label;
-
-  if (chosenXAxis === "obesity") {
-    label = "Obesity";
-  }
-  else {
-    label = "Income";
-  }
-
-  var toolTip = d3.tip()
-    .attr("class", "tooltip")
-    .offset([0, 0])
-    .html(function(d) {
-      return (`${d.state}`);
-    });
-
-  circlesGroup.call(toolTip);
-
-  circlesGroup.on("mouseover", function(data) {
-    toolTip.show(data, this);
-  })
-    // onmouseout event
-    .on("mouseout", function(data, index) {
-      toolTip.hide(data);
-    });
-
-  return circlesGroup;
-}
-
-function renderAxes(newX, xAxis) {
-  var bottomAxis = d3.axisBottom(newX);
-  xAxis.transition()
-    .duration(1000)
-    .call(bottomAxis)
-  return xAxis;
-}
-
-function renderCircles(circlesGroup, newX, chosenXAxis, x, y) {
-
-  circlesGroup.transition()
-    .duration(1000)
-    .attr("cx", d => newX(d[chosenXAxis]));
-  return circlesGroup;
-}
-function updateStates(data, chartGroup, newX, chosenXAxis, x, y, stateLabels) {
-  stateLabels = chartGroup
-    .data(data)
-    .attr("x", d => x(d[chosenXAxis]));
-  return chartGroup;
-}
-
-
-  //     circlesGroup
-  //         .on("mouseover", function(data) { toolTip.show(data, this) })
-  //         .on("mouseout", function(d, i) { toolTip.hide(d) });
-// }
-
-
-// }
-
 d3.csv("assets/data/data.csv").then(data => {
   data.forEach(d => {
     d.id = +d.id;
@@ -118,14 +44,17 @@ d3.csv("assets/data/data.csv").then(data => {
     d.smokesLow = +d.smokesLow;
   });
 
-  var x = xScale(data, chosenXAxis);
-  var bottomAxis = d3.axisBottom(x);
-  var xAxis = chartGroup.append("g")
-    .classed("x-axis", true)
-    .attr("transform", `translate(0, ${height})`)
+  var x = d3.scaleLinear()
+    .domain([20, d3.max(data, d => d.obesity)])
+    .range([0, width]);
+
   var y = d3.scaleLinear()
     .domain([0, d3.max(data, d => d.poverty)])
     .range([height, 0]);
+
+  chartGroup.append("g")
+    .attr("transform", `translate(0, ${height})`)
+    .call(d3.axisBottom(x));
   chartGroup.append("g")
     .call(d3.axisLeft(y));
 
@@ -134,41 +63,29 @@ d3.csv("assets/data/data.csv").then(data => {
     .data(data)
     .enter()
     .append("circle")
-    .attr("cx", (d) => x(d[chosenXAxis]))
+    .attr("cx", (d) => x(d.obesity))
     .attr("cy", (d) => y(d.poverty))
     .attr("r", "15")
     .style("fill", "#69b3a2")
     .attr("opacity", ".5");
 
-  var labelsGroup = chartGroup.append("g")
-      .attr("transform", `translate(${width / 2}, ${height + 20})`);
+  chartGroup.selectAll("label")
+      .data(data)
+      .enter()
+      .append("text")
+      .attr("class", "label")
+      .text(d => {
+        return (d.abbr) })
+      .attr("x", d => x(d.obesity) - 8 )
+      .attr("y", d => y(d.poverty) + 4 )
+      .attr("font_family", "sans-serif")  // Font type
+      .attr("font-size", "11px")  // Font size
+      .attr("fill", "black")  // Font color }
 
-  var obesityLabel = labelsGroup.append("text")
-      .attr("x", 0)
-      .attr("y", 20)
-      .attr("value", "obesity") // value to grab for event listener
-      .classed("active", true)
+    chartGroup.append("text")
+      .attr("transform", `translate(${width / 2}, ${height + margin.top + 30})`)
+      .attr("class", "axisText")
       .text("Obesity");
-
-  var incomeLabel = labelsGroup.append("text")
-      .attr("x", 0)
-      .attr("y", 40)
-      .attr("value", "income") // value to grab for event listener
-      .classed("inactive", true)
-      .text("Income");
-
-  var stateLabels = chartGroup.selectAll(".label")
-          .data(data)
-          .enter()
-          .append("text")
-          .attr("class", "label")
-          .text(function(d) {
-            return (d.abbr) })
-          .attr("x", function(d) { x(d.obesity) - 8 })
-          .attr("y", function(d) { y(d.poverty) + 4 })
-          .attr("font_family", "sans-serif")  // Font type
-          .attr("font-size", "11px")  // Font size
-          .attr("fill", "black")  // Font color }
 
   chartGroup.append("text")
     .attr("transform", "rotate(-90)")
@@ -178,64 +95,20 @@ d3.csv("assets/data/data.csv").then(data => {
     .attr("class", "axisText")
     .text("Poverty");
 
+    var toolTip = d3.tip()
+      .attr("class", "tooltip")
+      .offset([0, 0])
+      // d3.select(this)
+      .html(function(d) { return d.state });
 
-    labelsGroup.selectAll("text")
-      .on("click", function() {
-        // get value of selection
-        var value = d3.select(this).attr("value");
-        if (value !== chosenXAxis) {
 
-          // replaces chosenXAxis with value
-          chosenXAxis = value;
 
-          // console.log(chosenXAxis)
+    circlesGroup
+    .on("mouseover", function(data) { toolTip.show(data, this) })
+    .on("mouseout", (d, i) => { toolTip.hide(d)});
 
-          // functions here found above csv import
-          // updates x scale for new data
-          x = xScale(data, chosenXAxis);
+    chartGroup.call(toolTip);
 
-          // updates x axis with transition
-          xAxis = renderAxes(x, xAxis);
-
-          // updates circles with new x values
-          circlesGroup = renderCircles(circlesGroup, x, chosenXAxis, y, chartGroup);
-
-          // updates tooltips with new info
-          circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
-
-          stateLabels = updateStates(data, stateLabels, chosenXAxis, x, y)
-          // circlesGroup = updateStates(chosenXAxis);
-          // chartGroup.selectAll(".label")
-          //         .data(data)
-          //         .enter()
-          //         .append("text")
-          //         .attr("class", "label")
-          //         .text(function(d) {
-          //           return (d.abbr) })
-          //         .attr("x", function(d) { x(d[chosenXAxis]) - 8 })
-          //         .attr("y", function(d) { y(d.poverty) + 4 })
-          //         .attr("font_family", "sans-serif")  // Font type
-          //         .attr("font-size", "11px")  // Font size
-          //         .attr("fill", "black")  // Font color }
-          // changes classes to change bold text
-          if (chosenXAxis === "obesity") {
-            obesityLabel
-              .classed("active", true)
-              .classed("inactive", false);
-            incomeLabel
-              .classed("active", false)
-              .classed("inactive", true);
-          }
-          else {
-            obesityLabel
-              .classed("active", false)
-              .classed("inactive", true);
-            incomeLabel
-              .classed("active", true)
-              .classed("inactive", false);
-          }
-        }
-      });
 }).catch(function(error) {
     console.log(error);
 
