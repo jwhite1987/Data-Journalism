@@ -157,18 +157,19 @@ d3.csv("assets/data/data.csv").then(data => {
       .classed("inactive", true)
       .text("Income");
 
-  var stateLabels = chartGroup.selectAll(".label")
+  var stateLabels = chartGroup.selectAll("label")
           .data(data)
           .enter()
           .append("text")
           .attr("class", "label")
-          .text(function(d) {
+          .text(d => {
             return (d.abbr) })
-          .attr("x", function(d) { x(d.obesity) - 8 })
-          .attr("y", function(d) { y(d.poverty) + 4 })
+          .attr("x", d => x(d.obesity) - 8 )
+          .attr("y", d => y(d.poverty) + 4 )
           .attr("font_family", "sans-serif")  // Font type
           .attr("font-size", "11px")  // Font size
           .attr("fill", "black")  // Font color }
+          .classed("active", true)
 
   chartGroup.append("text")
     .attr("transform", "rotate(-90)")
@@ -181,43 +182,21 @@ d3.csv("assets/data/data.csv").then(data => {
 
     labelsGroup.selectAll("text")
       .on("click", function() {
-        // get value of selection
         var value = d3.select(this).attr("value");
         if (value !== chosenXAxis) {
 
-          // replaces chosenXAxis with value
           chosenXAxis = value;
 
-          // console.log(chosenXAxis)
-
-          // functions here found above csv import
-          // updates x scale for new data
           x = xScale(data, chosenXAxis);
 
-          // updates x axis with transition
           xAxis = renderAxes(x, xAxis);
 
-          // updates circles with new x values
           circlesGroup = renderCircles(circlesGroup, x, chosenXAxis, y, chartGroup);
 
-          // updates tooltips with new info
           circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
 
-          stateLabels = updateStates(data, stateLabels, chosenXAxis, x, y)
-          // circlesGroup = updateStates(chosenXAxis);
-          // chartGroup.selectAll(".label")
-          //         .data(data)
-          //         .enter()
-          //         .append("text")
-          //         .attr("class", "label")
-          //         .text(function(d) {
-          //           return (d.abbr) })
-          //         .attr("x", function(d) { x(d[chosenXAxis]) - 8 })
-          //         .attr("y", function(d) { y(d.poverty) + 4 })
-          //         .attr("font_family", "sans-serif")  // Font type
-          //         .attr("font-size", "11px")  // Font size
-          //         .attr("fill", "black")  // Font color }
-          // changes classes to change bold text
+          // stateLabels = updateStates(data, stateLabels, chosenXAxis, x, y)
+
           if (chosenXAxis === "obesity") {
             obesityLabel
               .classed("active", true)
@@ -225,6 +204,9 @@ d3.csv("assets/data/data.csv").then(data => {
             incomeLabel
               .classed("active", false)
               .classed("inactive", true);
+            stateLabels
+              .classed("active", true)
+              .classed("inactive", false)
           }
           else {
             obesityLabel
