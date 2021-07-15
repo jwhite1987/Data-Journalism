@@ -1,0 +1,38 @@
+{
+    "project_name": "Data Journalism and D3",
+    "version": "1.0",
+    "description": "Utilizes D3.js library to create a scatter plot using the data from the file 'data.csv'",
+    "snap_store_name": null,
+    "icon_src": null,
+    "screenshot_src": null,
+    "author": "Jimmy White",
+    "github_username": "jimmywhite1987",
+    "author_linkedin_username": "jimmywhite1987",
+    "author_twitter_username": null,
+    "author_website": "http://www.jwhiteanalytics.com",
+    "homepage": null,
+    "project_demo_url": null,
+    "repository_url": null,
+    "install_command": [
+        "pip install python"
+    ],
+    "usage_command": [
+        "python -m http.server"
+    ],
+    "test_command": [
+        "python -m http.server"
+    ],
+    "repository": {
+        "type": "git",
+        "url": null
+    },
+    "credits": [
+        {
+            "name": "Jimmy White",
+            "url": null
+        }
+    ],
+    "is_github_repos": true,
+    "has_start_command": true,
+    "has_test_command": true
+}
