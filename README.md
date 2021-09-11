@@ -22,3 +22,6 @@
 ## Links
 - JWhiteAnalytics.com
 - [LinkedIn](https://www.linkedin.com/in/jimmywhite1987)
+
+## Screenshots
+(/Images/Screenshot.png)
