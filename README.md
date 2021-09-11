@@ -20,7 +20,7 @@
 - Run python -m http.server in Terminal
 
 ## Links
-- JWhiteAnalytics.com
+- [JWhiteAnalytics.com](https://jwhiteanalytics.com)
 - [LinkedIn](https://www.linkedin.com/in/jimmywhite1987)
 
 ## Screenshots
