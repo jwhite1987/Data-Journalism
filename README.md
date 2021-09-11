@@ -12,7 +12,6 @@
 - HTML
 - JavaScript
 - Python
-- Export documents as Markdown, HTML and PDF
 
 ## Installation
 
