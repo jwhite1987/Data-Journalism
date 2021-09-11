@@ -24,4 +24,4 @@
 - [LinkedIn](https://www.linkedin.com/in/jimmywhite1987)
 
 ## Screenshots
-![image](/Images/Screenshot.png?raw=true)
+![image](/Images/screenshot.png)
