@@ -1,52 +1,24 @@
-<h1 align="center">
-
-Welcome to Data Journalism and D3 👋
-
-</h1>
-<p>
-<img alt="Version" src="https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000" />
-
-<a href="None/graphs/commit-activity" target="_blank"><img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" /></a>
+# Data Journalism
 
 
-</p>
+## Project Description
 
-> Utilizes D3.js library to create a scatter plot using the data from the file 'data.csv'
+- The goal of this project is to use the dataset included, under data.csv, to create scatter plots that analyze the current trends shaping people's lives to help the viewer understand and interpret several comparisons of healthcare data.
+- The dataset included is based on the 2014 1-year estimates from the [US Census Bureau](https://data.census.gov/cedsci/).
 
+## Languages & Technology Used
 
-## Install
-```sh
-pip install python
+- CSS
+- HTML
+- JavaScript
+- Python
+- Export documents as Markdown, HTML and PDF
 
-```
+## Installation
 
-## Usage
-```sh
-python -m http.server
+- Python is required (pip install python in Terminal)
+- Run python -m http.server in Terminal
 
-```
-
-## Run tests
-```sh
-python -m http.server
-
-```
-
-## Author
-👤 **Jimmy White**
-* Website: http://www.jwhiteanalytics.com
-
-* GitHub: [@jimmywhite1987](https://github.com/{github_username})
-* LinkedIn: [@jimmywhite1987](https://linkedin.com/in/{author_linkedin_username})
-
-
-
-
-## Show your support
-Give a ⭐️ if this project helped you!
-## Credits
-**[Jimmy White](None)**
-
-
----
-_This README was created with the [markdown-readme-generator](https://github.com/pedroermarinho/markdown-readme-generator)_
+## Links
+- JWhiteAnalytics.com
+- [LinkedIn](https://www.linkedin.com/in/jimmywhite1987)
