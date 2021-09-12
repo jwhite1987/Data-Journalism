@@ -1,4 +1,4 @@
-# Data Journalism
+# `Data Journalism`
 
 
 ## Project Description
@@ -24,7 +24,3 @@
 ## Links
 - [JWhiteAnalytics.com](https://jwhiteanalytics.com)
 - [LinkedIn](https://www.linkedin.com/in/jimmywhite1987)
-
-# Test
-
-# `Data Journalism`
