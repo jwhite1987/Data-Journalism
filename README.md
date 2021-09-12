@@ -18,9 +18,9 @@
 - Python is required (pip install python in Terminal)
 - Run python -m http.server in Terminal
 
+## Screenshots
+![image](/Images/screenshot.png)
+
 ## Links
 - [JWhiteAnalytics.com](https://jwhiteanalytics.com)
 - [LinkedIn](https://www.linkedin.com/in/jimmywhite1987)
-
-## Screenshots
-![image](/Images/screenshot.png)
