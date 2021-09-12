@@ -27,4 +27,4 @@
 
 # Test
 
-# ![#82eefd](https://via.placeholder.com/15/f03c15/000000?text=+) `Data Journalism`
+# ![#82eefd](https://via.placeholder.com/15/f/000000?text=+) `Data Journalism`
