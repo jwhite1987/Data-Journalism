@@ -24,3 +24,9 @@
 ## Links
 - [JWhiteAnalytics.com](https://jwhiteanalytics.com)
 - [LinkedIn](https://www.linkedin.com/in/jimmywhite1987)
+
+# Test
+
+<p align="center">
+# ![#82EEFD](https://via.placeholder.com/15/f/000000?text=+) `Data Journalism`
+</p>
